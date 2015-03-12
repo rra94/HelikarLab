@@ -6,39 +6,43 @@ Helikar Lab GSoC application
 Follow these steps to setup RApache:
 
 1. First Install the following dependencies for Ubuntu:
-```
-  sudo apt-get install g++
-  sudo apt-get install libpng-dev libX11-dev libXt-dev
-  sudo apt-get install apache2 apache2-mpm-prefork apache2-prefork-dev
-```
+
+  ```
+    sudo apt-get install g++
+    sudo apt-get install libpng-dev libX11-dev libXt-dev
+    sudo apt-get install apache2 apache2-mpm-prefork apache2-prefork-dev
+  ```
 2. Install R:
-```
-  sudo apt-get install r-base-dev
- ```
+
+  ```
+    sudo apt-get install r-base-dev
+   ```
 3. Install the follwing R packages. Make sure that the you install them in the root library. 
-```
-  install.packages(c("brew", "XML", "rjson", "RMySQL", "RJDBC", "rJava","Cairo", "Hmisc"))
- ```
+
+  ```
+    install.packages(c("brew", "XML", "rjson", "RMySQL", "RJDBC", "rJava","Cairo", "Hmisc"))
+   ```
 4. Install R apache (VERSION here is 1.2.5)
-```
-  Download the RApache tarball from http://rapache.net/downloads.html
-  tar xzvf rapache-VERSION.tar.gz 
-  cd rapache-VERSION
-  ./configure
-  make
-  sudo make install
- ```
+
+  ```
+    Download the RApache tarball from http://rapache.net/downloads.html
+    tar xzvf rapache-VERSION.tar.gz 
+    cd rapache-VERSION
+    ./configure
+    make
+    sudo make install
+   ```
 5. After the installation is complete, you have to create the follwing two files:
  
-a) r.conf in /etc/apache2/mods-available/r.conf :
-  Add the following lines of code in it:
-
+  r.conf in /etc/apache2/mods-available/r.conf :
+   Add the following lines of code in it:
+    ```
     <Location /R>
     ROutputErrors
     SetHandler r-script
     RHandler sys.source
     </Location>
-     
+   
     <Location /RApacheInfo>
     SetHandler r-info
     </Location>
@@ -47,18 +51,21 @@ a) r.conf in /etc/apache2/mods-available/r.conf :
   	SetHandler r-script
   	RHandler brew::brew
     </Directory>
+    ```
 
-Now all files in /R are assumed to be R-scripts, in /RApacheInfo you’ll find some information about your installation and all files under /var/www/brew is passed through the function brew located in the package brew.
+  Now all files in /R are assumed to be R-scripts, in /RApacheInfo you’ll find some information about your installation and   all files under /var/www/brew is passed through the function brew located in the package brew.
 
-b) The second file r.load in /etc/apache2/mods-available/r.load :
- ```
+  The second file r.load in /etc/apache2/mods-available/r.load :
+  
+   ```
     LoadModule R_module /usr/lib/apache2/modules/mod_R.so
- ```
-4. Now restart the server
-```  
-  sudo a2enmod r
-  /etc/init.d/apache2 restart
-```
+   ```
+6. Now restart the server
+
+  ```  
+    sudo a2enmod r
+    /etc/init.d/apache2 restart
+  ```
 ##DemoBrew Setup
 
 A simple app that takes in 3 numbers from the user and returns a descriptive summary.
