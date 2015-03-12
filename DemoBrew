@@ -1,0 +1,22 @@
+<html>
+<body>
+
+<form method=POST>
+val1<input type="text" name="a">
+val2<input type="text" name="b">
+val3<input type="text" name="c">
+<input type="submit" value="GO">
+</form>
+<pre>
+<code>
+<%
+n1<-as.numeric(POST$a)
+n2<-as.numeric(POST$b)
+n3<-as.numeric(POST$c)
+narr<-c(n1,n2,n3)
+print(summary(narr))
+%>
+</code>
+</pre>
+</body>
+</html>
