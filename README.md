@@ -81,3 +81,10 @@ To get this working:
 4. Make sure you have added the required handler (see RApache Setup). 
 
 5. Start RApache and open this file from your browser.
+
+##OpenCPU Demo
+A simple app that takes in 3 numbers from the user and returns the mean. This demo uses the OpenCPU library.
+
+Working demo can be found at:
+http://home.iitk.ac.in/~rrishav/demo2.html
+
