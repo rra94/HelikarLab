@@ -7,7 +7,6 @@ Follow these steps to setup RApache:
 
 1. First Install the following dependencies for Ubuntu:
 ```
-  sudo apt-get install gcc-gfortran
   sudo apt-get install g++
   sudo apt-get install libpng-dev libX11-dev libXt-dev
   sudo apt-get install apache2 apache2-mpm-prefork apache2-prefork-dev
