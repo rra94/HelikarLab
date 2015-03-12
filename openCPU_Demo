@@ -1,0 +1,47 @@
+<html>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//cdn.opencpu.org/opencpu-0.4.js"></script>
+<body>
+	
+
+val1<input type="text" id="a">
+val2<input type="text" id="b">
+val3<input type="text" id="c">
+<input id="submitbutton" type="submit" value="GO">
+
+<pre>
+
+<pre>mean is <code id="output"></code></pre>
+
+</body>
+<script>
+
+ocpu.seturl("//public.opencpu.org/ocpu/library/base/R")
+
+//handler
+$("#submitbutton").click(function(){
+	var arr=[];
+
+    arr.push(Number($("#a").val()));
+    arr.push(Number($("#b").val()));
+    arr.push(Number($("#c").val()));
+	console.log(arr);
+
+var req = ocpu.rpc("mean", {
+        "x":arr
+    }, function(outtxt){
+            $("#output").text(outtxt); 
+        });
+   
+        
+    //alert the error message
+    req.fail(function(){
+        alert("Server error: " + req.responseText);
+    });       
+
+
+
+});
+</script>
+</html>
