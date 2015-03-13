@@ -2,17 +2,30 @@
 
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="//cdn.opencpu.org/opencpu-0.4.js"></script>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <body>
 	
 
-val1<input type="text" id="a">
-val2<input type="text" id="b">
-val3<input type="text" id="c">
+<h1>Demo</h1>
+<h2> Enter three numbers</h2>
+&nbsp; val1 &nbsp; <input type="text" id="a"><br>
+&nbsp; val2 &nbsp; <input type="text" id="b"><br>
+&nbsp; val3 &nbsp; <input type="text" id="c"><br>
 <input id="submitbutton" type="submit" value="GO">
+<br>
+<h3><pre>mean is <code id="output"></code></pre></h3>
 
-<pre>
+<br>
+<br>
+<h2>Enter a list of space separated numbers</h2> 
+&nbsp;&nbsp;&nbsp;<input type="text" id="listit">
+<input id="submitlist" type="submit" value="GO">
 
-<pre>mean is <code id="output"></code></pre>
+<h3><pre>mean of list is <code id="output2"></code></pre></h3>
 
 </body>
 <script>
@@ -22,6 +35,9 @@ ocpu.seturl("//public.opencpu.org/ocpu/library/base/R")
 //handler
 $("#submitbutton").click(function(){
 	var arr=[];
+
+var myArray = $("#listit").val().split(" ");
+for(var i=0; i<myArray.length; i++) { myArray[i] = +myArray[i]; } 
 
     arr.push(Number($("#a").val()));
     arr.push(Number($("#b").val()));
@@ -34,12 +50,34 @@ var req = ocpu.rpc("mean", {
             $("#output").text(outtxt); 
         });
    
+var req2 = ocpu.rpc("mean", {
+        "x":myArray
+    }, function(outtxt){
+            $("#output2").text(outtxt); 
+        });
         
     //alert the error message
     req.fail(function(){
         alert("Server error: " + req.responseText);
-    });       
+    });    
+});
+   
+$("#submitlist").click(function(){
+	var arr=[];
 
+var myArray = $("#listit").val().split(" ");
+for(var i=0; i<myArray.length; i++) { myArray[i] = +myArray[i]; } 
+   
+var req2 = ocpu.rpc("mean", {
+        "x":myArray
+    }, function(outtxt){
+            $("#output2").text(outtxt); 
+        });
+        
+    //alert the error message
+    req2.fail(function(){
+        alert("Server error: " + req2.responseText);
+    }); 
 
 
 });
