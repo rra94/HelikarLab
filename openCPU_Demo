@@ -49,12 +49,6 @@ var req = ocpu.rpc("mean", {
     }, function(outtxt){
             $("#output").text(outtxt); 
         });
-   
-var req2 = ocpu.rpc("mean", {
-        "x":myArray
-    }, function(outtxt){
-            $("#output2").text(outtxt); 
-        });
         
     //alert the error message
     req.fail(function(){
