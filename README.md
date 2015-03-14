@@ -83,7 +83,7 @@ To get this working:
 5. Start RApache and open this file from your browser.
 
 ##OpenCPU Demo
-A simple app that takes in 3 numbers from the user and returns the mean. This demo uses the OpenCPU library.
+A simple app that takes in numbers from the user and returns the mean. It then plots a  bar chart with these numbers. The numbers below the mean are coloured red and others, blue. This demo uses the OpenCPU library.
 
 Working demo can be found at:
 http://home.iitk.ac.in/~rrishav/demo2.html
