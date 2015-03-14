@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+
+<style>
+#graph div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 8px;
+  margin: 1px;
+  margin-left:100px;
+  color: white;
+}
+</style>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//cdn.opencpu.org/opencpu-0.4.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<body>
+
+<h1>Demo</h1>
+<h2> Enter three numbers</h2>
+&nbsp; val1 &nbsp; <input type="text" id="a"><br>
+&nbsp; val2 &nbsp; <input type="text" id="b"><br>
+&nbsp; val3 &nbsp; <input type="text" id="c"><br>
+<input id="submitbutton" type="submit" value="GO">
+<br>
+<h3><pre>mean is <code id="output"></code></pre></h3>
+<br>
+<br>
+<h2>Enter a list of space separated numbers</h2> 
+&nbsp;&nbsp;&nbsp;<input type="text" id="listit">
+<input id="submitlist" type="submit" value="GO">
+<h3><pre>mean of list is <code id="output2"></code></pre></h3>
+<br>
+<h4>Chart</h4>
+<h5>The values below the mean are shown in red</h5>
+<div id="graph"></div>
+
+</body>
+
+<script>
+ocpu.seturl("//public.opencpu.org/ocpu/library/base/R");
+var mysession;
+var dat;
+var myArray;
+
+//Graph Update
+function update(data, mean) {
+$("#graph").html("");.
+  var gr = d3.select("#graph")
+	.selectAll(".bar")
+    .data(data);
+		
+var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range([0, 600]);
+
+gr.enter().append("div")
+	.style("width", function(d) { return x(d) + "px"; })
+	.style("background-color",  function(d){if(d<mean) return "red";})
+	.text(function(d) { return d; });
+
+gr.exit().remove();
+}
+
+//handler
+$("#submitbutton").click(function(){
+   var arr=[];
+    arr.push(Number($("#a").val()));
+    arr.push(Number($("#b").val()));
+    arr.push(Number($("#c").val()));
+	console.log(arr);
+
+var req = ocpu.rpc("mean", {
+    "x":arr
+    }, function(outtxt){
+	update(arr, outtxt);
+        $("#output").text(outtxt); 
+});
+        
+    //alert the error message
+    req.fail(function(){
+        alert("Server error: " + req.responseText);
+    });    
+});
+   
+$("#submitlist").click(function(){
+
+myArray = $("#listit").val().split(" ");
+for(var i=0; i<myArray.length; i++) { myArray[i] = +myArray[i]; } 
+   
+var req2 = ocpu.call("mean", {
+        "x":myArray
+    }, function(outtxt){
+		mysession = outtxt;
+        mysession.getObject(function(data){
+			$("#output2").text(data);
+			update(myArray, data);
+		}); 
+		
+    });
+	
+            
+ //alert the error message
+    req2.fail(function(){
+        alert("Server error: " + req2.responseText);
+    }); 
+});
+</script>
+</html>
