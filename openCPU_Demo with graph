@@ -51,7 +51,7 @@ var myArray;
 
 //Graph Update
 function update(data, mean) {
-$("#graph").html("");.
+$("#graph").html("");
   var gr = d3.select("#graph")
 	.selectAll(".bar")
     .data(data);
